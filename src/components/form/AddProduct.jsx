@@ -1,9 +1,8 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
 import FormNavigationButtons from "./FormNavigationButtons";
-
 import { FormProvider, useForm } from "react-hook-form";
-import Breadcrumbs from "./BreadCrumbs";
+import Breadcrumbs from "./Breadcrumbs";
 
 const AddProduct = () => {
 
