@@ -11,7 +11,7 @@ import Docs from './pages/Docs';
 import Settings from './pages/Settings';
 import ErrorElement from './components/ErrorElement';
 
-const AddProduct = React.lazy(() => import('./components/AddProduct'));
+const AddProduct = React.lazy(() => import('./components/form/AddProduct'));
 const DescriptionForm = React.lazy(() => import('./components/form/DescriptionForm'));
 const VariantsForm = React.lazy(() => import('./components/form/VariantsForm'));
 const CombinationsForm = React.lazy(() => import('./components/form/CombinationsForm'));
