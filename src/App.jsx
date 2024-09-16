@@ -1,22 +1,31 @@
-import React, { Suspense } from 'react';
-import { createBrowserRouter, Navigate, RouterProvider } from 'react-router-dom';
-import Layout from './layout/Layout';
-import Home from './pages/Home';
-import Stores from './pages/Stores';
-import Products from './pages/Products';
-import Catalogues from './pages/Catalogues';
-import Promotions from './pages/Promotions';
-import Reports from './pages/Reports';
-import Docs from './pages/Docs';
-import Settings from './pages/Settings';
-import ErrorElement from './components/ErrorElement';
+import React, { Suspense } from "react";
+import {
+  createBrowserRouter,
+  Navigate,
+  RouterProvider,
+} from "react-router-dom";
+import Layout from "./layout/Layout";
+import Home from "./pages/Home";
+import Stores from "./pages/Stores";
+import Products from "./pages/Products";
+import Catalogues from "./pages/Catalogues";
+import Promotions from "./pages/Promotions";
+import Reports from "./pages/Reports";
+import Docs from "./pages/Docs";
+import Settings from "./pages/Settings";
+import ErrorElement from "./components/ErrorElement";
 
-const AddProduct = React.lazy(() => import('./components/form/AddProduct'));
-const DescriptionForm = React.lazy(() => import('./components/form/DescriptionForm'));
-const VariantsForm = React.lazy(() => import('./components/form/VariantsForm'));
-const CombinationsForm = React.lazy(() => import('./components/form/CombinationsForm'));
-const PriceInfoForm = React.lazy(() => import('./components/form/PriceInfoForm'));
-
+const AddProduct = React.lazy(() => import("./components/form/AddProduct"));
+const DescriptionForm = React.lazy(() =>
+  import("./components/form/DescriptionForm")
+);
+const VariantsForm = React.lazy(() => import("./components/form/VariantsForm"));
+const CombinationsForm = React.lazy(() =>
+  import("./components/form/CombinationsForm")
+);
+const PriceInfoForm = React.lazy(() =>
+  import("./components/form/PriceInfoForm")
+);
 
 const router = createBrowserRouter([
   {

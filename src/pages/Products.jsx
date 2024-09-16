@@ -47,7 +47,6 @@ const Products = () => {
     });
   }, [categories, products]);
 
-  console.log(combinedCategories);
 
   return (
     <div className="font-worksans">

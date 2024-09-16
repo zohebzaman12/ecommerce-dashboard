@@ -1,6 +1,6 @@
-import React from 'react';
-import { useFormContext } from 'react-hook-form';
-import Switch from 'react-switch';
+import React from "react";
+import { useFormContext } from "react-hook-form";
+import Switch from "react-switch";
 
 const CombinationsForm = () => {
   const {
@@ -11,24 +11,29 @@ const CombinationsForm = () => {
     getValues,
   } = useFormContext();
 
-  const variants = getValues('variants') || [];
-  
+  const variants = getValues("variants") || [];
+
   const generateCombinations = (data) => {
-    const options = data.map(item => item.values);
-    const combinations = options.reduce((acc, values) => {
-      return acc.flatMap(accValue => values.map(value => accValue ? `${accValue}/${value}` : value));
-    }, ['']);
+    const options = data.map((item) => item.values);
+    const combinations = options.reduce(
+      (acc, values) => {
+        return acc.flatMap((accValue) =>
+          values.map((value) => (accValue ? `${accValue}/${value}` : value))
+        );
+      },
+      [""]
+    );
     return combinations;
   };
 
   const titles = generateCombinations(variants);
 
   const checkDuplicateSKUs = (sku, index) => {
-    const combinations = getValues('combinations');
+    const combinations = getValues("combinations");
     const duplicate = combinations.some(
       (item, idx) => item.sku === sku && idx !== index
     );
-    return duplicate ? 'Duplicate SKU' : true;
+    return duplicate ? "Duplicate SKU" : true;
   };
 
   return (
@@ -46,17 +51,22 @@ const CombinationsForm = () => {
           const inStock = watch(`combinations[${index}].inStock`, false);
 
           return (
-            <div key={index} className="mb-4 grid grid-cols-4 gap-4 items-center">
+            <div
+              key={index}
+              className="mb-4 grid grid-cols-4 gap-4 items-center"
+            >
               <div className="text-gray-700">{title}</div>
 
               <div className="relative">
                 <input
                   {...register(`combinations[${index}].sku`, {
-                    required: 'SKU is required',
+                    required: "SKU is required",
                     validate: (value) => checkDuplicateSKUs(value, index),
                   })}
                   className={`w-full px-3 py-2 border my-1 ${
-                    errors.combinations?.[index]?.sku ? 'border-red-500' : 'border-gray-300'
+                    errors.combinations?.[index]?.sku
+                      ? "border-red-500"
+                      : "border-gray-300"
                   } rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm`}
                 />
                 {errors.combinations?.[index]?.sku && (
@@ -68,7 +78,9 @@ const CombinationsForm = () => {
 
               <div className="flex justify-center">
                 <Switch
-                  onChange={(checked) => setValue(`combinations[${index}].inStock`, checked)}
+                  onChange={(checked) =>
+                    setValue(`combinations[${index}].inStock`, checked)
+                  }
                   checked={inStock}
                   className="react-switch"
                   onColor="#0F172A"
@@ -85,15 +97,17 @@ const CombinationsForm = () => {
                 <input
                   type="number"
                   {...register(`combinations[${index}].quantity`, {
-                    required: inStock && 'Quantity is required if in stock',
+                    required: inStock && "Quantity is required if in stock",
                     min: {
                       value: 1,
-                      message: 'Quantity must be at least 1',
+                      message: "Quantity must be at least 1",
                     },
                   })}
                   disabled={!inStock}
                   className={`w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm ${
-                    inStock ? 'bg-white border-gray-300' : 'bg-gray-100 border-gray-300 text-gray-400'
+                    inStock
+                      ? "bg-white border-gray-300"
+                      : "bg-gray-100 border-gray-300 text-gray-400"
                   }`}
                 />
                 {errors.combinations?.[index]?.quantity && (

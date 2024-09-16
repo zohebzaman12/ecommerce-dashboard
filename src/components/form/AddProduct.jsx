@@ -5,7 +5,6 @@ import { FormProvider, useForm } from "react-hook-form";
 import Breadcrumbs from "./Breadcrumbs";
 
 const AddProduct = () => {
-
   const methods = useForm();
 
   return (

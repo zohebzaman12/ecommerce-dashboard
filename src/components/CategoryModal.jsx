@@ -1,31 +1,36 @@
 import React, { useState } from "react";
 import ReactDOM from "react-dom";
 
-const CategoryModal = ({ isOpen, onClose, categoryName, setCategoryName, onSave }) => {
-  const [error, setError] = useState('');
+const CategoryModal = ({
+  isOpen,
+  onClose,
+  categoryName,
+  setCategoryName,
+  onSave,
+}) => {
+  const [error, setError] = useState("");
 
   if (!isOpen) return null;
 
-
   const handleSave = () => {
     if (!categoryName.trim()) {
-      setError('Category name cannot be empty');
+      setError("Category name cannot be empty");
       return;
     }
-    setError('');
-    onSave(); 
+    setError("");
+    onSave();
   };
 
   // Handle Enter key press
   const handleKeyPress = (e) => {
-    if (e.key === 'Enter') {
+    if (e.key === "Enter") {
       handleSave();
     }
   };
 
   // Handle cancel and reset error
   const handleCancel = () => {
-    setError(''); // Reset error state
+    setError(""); // Reset error state
     onClose(); // Close the modal
   };
 
@@ -39,11 +44,13 @@ const CategoryModal = ({ isOpen, onClose, categoryName, setCategoryName, onSave 
           value={categoryName}
           onChange={(e) => setCategoryName(e.target.value)}
           onKeyPress={handleKeyPress} // Detect Enter key
-          className={`border ${error ? 'border-red-500' : 'border-gray-300'} rounded-md px-3 py-2 mb-2 w-full`}
+          className={`border ${
+            error ? "border-red-500" : "border-gray-300"
+          } rounded-md px-3 py-2 mb-2 w-full`}
           placeholder="Enter category name"
         />
-        {error && <span className="text-red-500 text-sm mb-4">{error}</span>} {/* Show error message */}
-        
+        {error && <span className="text-red-500 text-sm mb-4">{error}</span>}{" "}
+        {/* Show error message */}
         <div className="flex gap-2 self-end">
           <button
             onClick={handleCancel} // Update this to handleCancel

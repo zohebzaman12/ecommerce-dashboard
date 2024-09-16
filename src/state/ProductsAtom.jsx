@@ -1,4 +1,4 @@
-import { atom } from 'jotai';
+import { atom } from "jotai";
 
 export const productsAtom = atom([
   {
@@ -142,7 +142,7 @@ export const productsAtom = atom([
       value: 300,
     },
   },
-  
+
   {
     name: "Puma Graphic T-shirt",
     category: "Tshirt",
@@ -177,5 +177,5 @@ export const productsAtom = atom([
       method: "pct",
       value: 5,
     },
-  }
+  },
 ]);

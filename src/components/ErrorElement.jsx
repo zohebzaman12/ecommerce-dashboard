@@ -1,5 +1,5 @@
-import { Link, useNavigate, useRouteError } from 'react-router-dom';
-import { FiAlertCircle } from 'react-icons/fi';
+import { Link, useNavigate, useRouteError } from "react-router-dom";
+import { FiAlertCircle } from "react-icons/fi";
 
 const ErrorElement = () => {
   const error = useRouteError();
@@ -13,9 +13,13 @@ const ErrorElement = () => {
     <div className="min-h-screen flex flex-col items-center justify-center bg-gray-50">
       <div className="text-center">
         <FiAlertCircle className="text-red-600 w-16 h-16 mx-auto" />
-        <h1 className="mt-4 text-3xl font-semibold text-gray-900">Oops! Something went wrong</h1>
+        <h1 className="mt-4 text-3xl font-semibold text-gray-900">
+          Oops! Something went wrong
+        </h1>
         <p className="mt-2 text-lg text-gray-700">
-          {error?.statusText || error?.message || "An unexpected error occurred."}
+          {error?.statusText ||
+            error?.message ||
+            "An unexpected error occurred."}
         </p>
         <p className="mt-1 text-gray-500">
           {error?.status ? `Error Code: ${error.status}` : null}

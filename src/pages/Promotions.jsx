@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 function Promotions() {
   return (
@@ -13,7 +13,9 @@ function Promotions() {
           </button>
         </div>
         <div className="bg-customGrayLighter p-6 rounded-lg shadow-md">
-          <h2 className="text-lg font-semibold">Buy one get one free - T-shirts</h2>
+          <h2 className="text-lg font-semibold">
+            Buy one get one free - T-shirts
+          </h2>
           <p>Expires: Oct 15, 2024</p>
           <button className="mt-4 bg-customBlue hover:bg-customBlue-dark text-white font-bold py-2 px-4 rounded">
             Manage Promotion

@@ -1,7 +1,7 @@
-import React, { useEffect } from 'react';
-import { useFormContext, useFieldArray } from 'react-hook-form';
-import CreatableSelect from 'react-select/creatable';
-import { FiTrash2 } from 'react-icons/fi';
+import React, { useEffect } from "react";
+import { useFormContext, useFieldArray } from "react-hook-form";
+import CreatableSelect from "react-select/creatable";
+import { FiTrash2 } from "react-icons/fi";
 
 const VariantsForm = () => {
   const {
@@ -14,15 +14,15 @@ const VariantsForm = () => {
 
   const { fields, append, remove } = useFieldArray({
     control,
-    name: 'variants',
+    name: "variants",
   });
 
-  const variants = watch('variants');
+  const variants = watch("variants");
 
   // Append a default row when the form is mounted
   useEffect(() => {
     if (fields.length === 0) {
-      append({ option: '', values: [] });
+      append({ option: "", values: [] });
     }
   }, [fields, append]);
 
@@ -40,10 +40,14 @@ const VariantsForm = () => {
           <div key={item.id} className="mb-4 flex space-x-3 items-start">
             <div className="flex-1">
               <input
-                {...register(`variants.${index}.option`, { required: "Option can't be empty" })}
+                {...register(`variants.${index}.option`, {
+                  required: "Option can't be empty",
+                })}
                 placeholder="Option"
                 className={`w-full px-3 py-2 border ${
-                  errors.variants?.[index]?.option ? 'border-red-500' : 'border-gray-300'
+                  errors.variants?.[index]?.option
+                    ? "border-red-500"
+                    : "border-gray-300"
                 } rounded-md shadow-sm focus:outline-none focus:ring-customBlue focus:border-customBlue sm:text-sm`}
               />
               {errors.variants?.[index]?.option && (
@@ -58,17 +62,24 @@ const VariantsForm = () => {
                 isMulti
                 placeholder="Values"
                 options={[
-                  { value: 'S', label: 'S' },
-                  { value: 'M', label: 'M' },
-                  { value: 'L', label: 'L' },
-                  { value: 'Black', label: 'Black' },
-                  { value: 'Red', label: 'Red' },
+                  { value: "S", label: "S" },
+                  { value: "M", label: "M" },
+                  { value: "L", label: "L" },
+                  { value: "Black", label: "Black" },
+                  { value: "Red", label: "Red" },
                 ]}
-                value={variants?.[index]?.values?.map(value => ({ value, label: value })) || []}
+                value={
+                  variants?.[index]?.values?.map((value) => ({
+                    value,
+                    label: value,
+                  })) || []
+                }
                 className="basic-multi-select"
                 classNamePrefix="select"
                 onChange={(selectedOptions) => {
-                  const values = selectedOptions ? selectedOptions.map((option) => option.value) : [];
+                  const values = selectedOptions
+                    ? selectedOptions.map((option) => option.value)
+                    : [];
                   setValue(`variants.${index}.values`, values);
                 }}
               />
@@ -82,7 +93,8 @@ const VariantsForm = () => {
                 type="hidden"
                 {...register(`variants.${index}.values`, {
                   validate: (value) =>
-                    value && value.length > 0 || "At least one value is required",
+                    (value && value.length > 0) ||
+                    "At least one value is required",
                 })}
               />
             </div>
@@ -99,7 +111,7 @@ const VariantsForm = () => {
 
         <button
           type="button"
-          onClick={() => append({ option: '', values: [] })}
+          onClick={() => append({ option: "", values: [] })}
           className="text-customBlue hover:text-blue-700 text-sm font-medium"
         >
           + Add Option

@@ -1,4 +1,4 @@
-import React from 'react'
+import React from "react";
 
 const Stores = () => {
   return (
@@ -22,6 +22,6 @@ const Stores = () => {
       </div>
     </div>
   );
-}
+};
 
-export default Stores
+export default Stores;
