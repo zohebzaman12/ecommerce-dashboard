@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useFormContext, useFieldArray } from 'react-hook-form';
 import CreatableSelect from 'react-select/creatable';
 import { FiTrash2 } from 'react-icons/fi';
@@ -8,6 +8,7 @@ const VariantsForm = () => {
     register,
     control,
     setValue,
+    watch,
     formState: { errors },
   } = useFormContext();
 
@@ -16,7 +17,14 @@ const VariantsForm = () => {
     name: 'variants',
   });
 
-  // Removed useEffect for appending variants as it's handled through default values
+  const variants = watch('variants');
+
+  // Append a default row when the form is mounted
+  useEffect(() => {
+    if (fields.length === 0) {
+      append({ option: '', values: [] });
+    }
+  }, [fields, append]);
 
   return (
     <div className="max-w-2xl p-6 bg-white drop-shadow-md rounded-md">
@@ -32,7 +40,7 @@ const VariantsForm = () => {
           <div key={item.id} className="mb-4 flex space-x-3 items-start">
             <div className="flex-1">
               <input
-                {...register(`variants[${index}].option`, { required: "Option can't be empty" })}
+                {...register(`variants.${index}.option`, { required: "Option can't be empty" })}
                 placeholder="Option"
                 className={`w-full px-3 py-2 border ${
                   errors.variants?.[index]?.option ? 'border-red-500' : 'border-gray-300'
@@ -56,19 +64,33 @@ const VariantsForm = () => {
                   { value: 'Black', label: 'Black' },
                   { value: 'Red', label: 'Red' },
                 ]}
+                value={variants?.[index]?.values?.map(value => ({ value, label: value })) || []}
                 className="basic-multi-select"
                 classNamePrefix="select"
                 onChange={(selectedOptions) => {
                   const values = selectedOptions ? selectedOptions.map((option) => option.value) : [];
-                  setValue(`variants[${index}].values`, values);
+                  setValue(`variants.${index}.values`, values);
                 }}
+              />
+              {/* Custom validation for ensuring at least one value is selected */}
+              {errors.variants?.[index]?.values && (
+                <span className="text-red-500 text-sm">
+                  {errors.variants[index].values.message}
+                </span>
+              )}
+              <input
+                type="hidden"
+                {...register(`variants.${index}.values`, {
+                  validate: (value) =>
+                    value && value.length > 0 || "At least one value is required",
+                })}
               />
             </div>
 
             <button
               type="button"
               onClick={() => remove(index)}
-              className="text-red-500 hover:text-red-700 self-center"
+              className="text-red-500 hover:text-red-700 mt-3"
             >
               <FiTrash2 size={16} />
             </button>

@@ -8,18 +8,22 @@ const FormNavigationButtons = () => {
   const { trigger, handleSubmit } = useFormContext();
   const updateProducts = useUpdateProducts();
 
-  const navigateTo = async (path, isSubmit = false) => {
-    const isValid = await trigger(); // Trigger validation for the current form
-    if (isValid) {
-      if (isSubmit) {
-        handleSubmit((data) => {
-          console.log('Form Data:', data);
-          updateProducts(data);
-          navigate(path);
-        })(); // This will trigger the submission and then navigate
-      } else {
-        navigate(path); // Navigate without submission
+  const navigateTo = async (path, isSubmit = false, shouldValidate = true) => {
+    if (shouldValidate) {
+      const isValid = await trigger(); // Trigger validation for the current form
+      if (!isValid) {
+        return; // Prevent navigation if the form is not valid
       }
+    }
+
+    if (isSubmit) {
+      handleSubmit((data) => {
+        console.log('Form Data:', data);
+        updateProducts(data);
+        navigate(path);
+      })(); // This will trigger the submission and then navigate
+    } else {
+      navigate(path); // Navigate without submission or validation
     }
   };
 
@@ -46,7 +50,7 @@ const FormNavigationButtons = () => {
         <>
           <button
             className="h-11 w-40 text-base bg-customGrayLight text-customBlue font-semibold rounded-md hover:bg-customGrayLight-dark transition duration-300"
-            onClick={() => navigateTo("/add-product/description")}
+            onClick={() => navigateTo("/add-product/description", false, false)} // No validation when going back
           >
             Back
           </button>
@@ -63,7 +67,7 @@ const FormNavigationButtons = () => {
         <>
           <button
             className="h-11 w-40 text-base bg-customGrayLight text-customBlue font-semibold rounded-md hover:bg-customGrayLight-dark transition duration-300"
-            onClick={() => navigateTo("/add-product/variants")}
+            onClick={() => navigateTo("/add-product/variants", false, false)} // No validation when going back
           >
             Back
           </button>
@@ -80,14 +84,14 @@ const FormNavigationButtons = () => {
         <>
           <button
             className="h-11 w-40 text-base bg-customGrayLight text-customBlue font-semibold rounded-md hover:bg-customGrayLight-dark transition duration-300"
-            onClick={() => navigateTo("/add-product/combinations")}
+            onClick={() => navigateTo("/add-product/combinations", false, false)} // No validation when going back
           >
             Back
           </button>
           <button
             type="button"
             className="h-11 w-40 text-base bg-customBlue text-white font-semibold rounded-md hover:bg-customBlue-dark transition duration-300"
-            onClick={() => navigateTo("/products", true)} // Pass true to handle submit
+            onClick={() => navigateTo("/products", true)} // Submit form and navigate
           >
             Submit
           </button>

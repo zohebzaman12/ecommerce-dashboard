@@ -86,6 +86,10 @@ const CombinationsForm = () => {
                   type="number"
                   {...register(`combinations[${index}].quantity`, {
                     required: inStock && 'Quantity is required if in stock',
+                    min: {
+                      value: 1,
+                      message: 'Quantity must be at least 1',
+                    },
                   })}
                   disabled={!inStock}
                   className={`w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm ${

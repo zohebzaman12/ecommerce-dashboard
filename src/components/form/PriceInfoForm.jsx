@@ -12,7 +12,7 @@ const PriceInfoForm = () => {
   };
 
   return (
-    <div className="max-w-md p-6 bg-white shadow-md rounded-md">
+    <div className="max-w-md p-6 bg-white shadow-md rounded-md pb-8">
       <h2 className="text-xl font-semibold mb-4">Price Info</h2>
       <form>
         <div className="mb-4">
@@ -33,16 +33,30 @@ const PriceInfoForm = () => {
         </div>
 
         <div className="mb-4 flex items-center">
-          <div className="flex-grow">
+          <div className="flex-grow relative">
             <label className="block text-gray-700 font-semibold mb-2">
-              Discount
+              Discount {discountMethod === '%' ? '(%)' : '($)'}
             </label>
             <input
               type="number"
-              {...register('discount')}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+              {...register('discount', {
+                validate: (value) => {
+                  if (discountMethod === '%' && (value < 0 || value > 100)) {
+                    return 'Discount must be between 0 and 100 when in percentage';
+                  } else if (discountMethod === '$' && value < 0) {
+                    return 'Discount must be a positive value when in dollars';
+                  }
+                  return true;
+                },
+              })}
+              className={`w-full px-3 py-2 border ${
+                errors.discount ? 'border-red-500' : 'border-gray-300'
+              } rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm`}
               defaultValue="12"
             />
+            {errors.discount && (
+              <span className="text-red-500 text-sm absolute left-1 -bottom-11">{errors.discount.message}</span>
+            )}
           </div>
 
           <div className="ml-4 flex items-center self-end">
