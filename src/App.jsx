@@ -14,6 +14,7 @@ import Reports from "./pages/Reports";
 import Docs from "./pages/Docs";
 import Settings from "./pages/Settings";
 import ErrorElement from "./components/ErrorElement";
+import LoadingSpinner from "./components/LoadingSpinner";
 
 const AddProduct = React.lazy(() => import("./components/form/AddProduct"));
 const DescriptionForm = React.lazy(() =>
@@ -26,61 +27,33 @@ const CombinationsForm = React.lazy(() =>
 const PriceInfoForm = React.lazy(() =>
   import("./components/form/PriceInfoForm")
 );
-
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Layout />,
     errorElement: <ErrorElement />,
     children: [
-      {
-        path: "/",
-        element: <Home />,
-      },
-      {
-        path: "stores",
-        element: <Stores />,
-      },
-      {
-        path: "catalogues",
-        element: <Catalogues />,
-      },
-      {
-        path: "promotions",
-        element: <Promotions />,
-      },
-      {
-        path: "reports",
-        element: <Reports />,
-      },
-      {
-        path: "docs",
-        element: <Docs />,
-      },
-      {
-        path: "settings",
-        element: <Settings />,
-      },
-      {
-        path: "products",
-        element: <Products />,
-      },
+      { path: "/", element: <Home /> },
+      { path: "stores", element: <Stores /> },
+      { path: "catalogues", element: <Catalogues /> },
+      { path: "promotions", element: <Promotions /> },
+      { path: "reports", element: <Reports /> },
+      { path: "docs", element: <Docs /> },
+      { path: "settings", element: <Settings /> },
+      { path: "products", element: <Products /> },
       {
         path: "add-product",
         element: (
-          <Suspense fallback={<div>Loading Add Product...</div>}>
+          <Suspense fallback={<LoadingSpinner />}>
             <AddProduct />
           </Suspense>
         ),
         children: [
-          {
-            index: true,
-            element: <Navigate to="description" replace />,
-          },
+          { index: true, element: <Navigate to="description" replace /> },
           {
             path: "description",
             element: (
-              <Suspense fallback={<div>Loading Description Form...</div>}>
+              <Suspense fallback={<LoadingSpinner />}>
                 <DescriptionForm />
               </Suspense>
             ),
@@ -88,7 +61,7 @@ const router = createBrowserRouter([
           {
             path: "variants",
             element: (
-              <Suspense fallback={<div>Loading Variants Form...</div>}>
+              <Suspense fallback={<LoadingSpinner />}>
                 <VariantsForm />
               </Suspense>
             ),
@@ -96,7 +69,7 @@ const router = createBrowserRouter([
           {
             path: "combinations",
             element: (
-              <Suspense fallback={<div>Loading Combinations Form...</div>}>
+              <Suspense fallback={<LoadingSpinner />}>
                 <CombinationsForm />
               </Suspense>
             ),
@@ -104,7 +77,7 @@ const router = createBrowserRouter([
           {
             path: "price-info",
             element: (
-              <Suspense fallback={<div>Loading Price Info Form...</div>}>
+              <Suspense fallback={<LoadingSpinner />}>
                 <PriceInfoForm />
               </Suspense>
             ),

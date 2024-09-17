@@ -47,7 +47,6 @@ const Products = () => {
     });
   }, [categories, products]);
 
-
   return (
     <div className="font-worksans">
       <div className="flex justify-between pb-4">
@@ -74,7 +73,7 @@ const Products = () => {
           {combinedCategories.map((category, index) => (
             <div
               key={index}
-              className="w-80 min-h-[803px] bg-customGrayLighter p-4 rounded-md flex-shrink-0"
+              className="min-w-80 min-h-[803px] bg-customGrayLighter p-4 rounded-md flex-shrink-0"
             >
               <h3 className="text-lg font-semibold mb-4">{category.name}</h3>
               <div className="h-full space-y-4">
@@ -82,7 +81,7 @@ const Products = () => {
                   category.products.map((product) => (
                     <div
                       key={product.id}
-                      className="bg-white w-72 flex gap-4 shadow-sm p-2 rounded-md"
+                      className="bg-white min-w-72 flex gap-4 shadow-sm p-2 rounded-md"
                     >
                       <img
                         src={
@@ -100,9 +99,9 @@ const Products = () => {
                             {product.name}
                           </h4>
                           <p className="font-normal text-sm">{product.price}</p>
-                        </div>
-                        <div className="text-customBlue text-xs h-7 w-11 font-medium bg-customBlueLight rounded-md flex justify-center items-center">
-                          {product.brand}
+                          <div className="inline-flex items-center justify-center px-2 py-1 mt-2 bg-customBlueLight text-customBlue text-xs font-medium rounded-md flex-grow-0 flex-shrink-0">
+                            {product.brand}
+                          </div>
                         </div>
                       </div>
                     </div>
