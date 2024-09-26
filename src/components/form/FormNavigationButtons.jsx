@@ -5,12 +5,12 @@ import useUpdateProducts from "../../utils/transformProductData";
 const FormNavigationButtons = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { trigger, handleSubmit } = useFormContext();
+  const { trigger, handleSubmit} = useFormContext();
   const updateProducts = useUpdateProducts();
 
   const navigateTo = async (path, isSubmit = false, shouldValidate = true) => {
     if (shouldValidate) {
-      const isValid = await trigger(); // Trigger validation for the current form
+      const isValid = await trigger();
       if (!isValid) {
         return; // Prevent navigation if the form is not valid
       }

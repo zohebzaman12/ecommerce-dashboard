@@ -9,8 +9,6 @@ const DescriptionForm = () => {
     register,
     formState: { errors },
     setValue,
-    trigger, // Import trigger from react-hook-form
-    getValues,
   } = useFormContext(); // Use form context to access form methods
 
   const [categories] = useAtom(categoryAtom);

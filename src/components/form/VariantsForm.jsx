@@ -1,15 +1,14 @@
 import React, { useEffect } from "react";
-import { useFormContext, useFieldArray } from "react-hook-form";
+import { useFormContext, useFieldArray, Controller } from "react-hook-form";
 import CreatableSelect from "react-select/creatable";
 import { FiTrash2 } from "react-icons/fi";
 
 const VariantsForm = () => {
   const {
-    register,
     control,
-    setValue,
     watch,
     formState: { errors },
+    register,
   } = useFormContext();
 
   const { fields, append, remove } = useFieldArray({
@@ -19,7 +18,6 @@ const VariantsForm = () => {
 
   const variants = watch("variants");
 
-  // Append a default row when the form is mounted
   useEffect(() => {
     if (fields.length === 0) {
       append({ option: "", values: [] });
@@ -58,45 +56,39 @@ const VariantsForm = () => {
             </div>
 
             <div className="flex-1">
-              <CreatableSelect
-                isMulti
-                placeholder="Values"
-                options={[
-                  { value: "S", label: "S" },
-                  { value: "M", label: "M" },
-                  { value: "L", label: "L" },
-                  { value: "Black", label: "Black" },
-                  { value: "Red", label: "Red" },
-                ]}
-                value={
-                  variants?.[index]?.values?.map((value) => ({
-                    value,
-                    label: value,
-                  })) || []
-                }
-                className="basic-multi-select"
-                classNamePrefix="select"
-                onChange={(selectedOptions) => {
-                  const values = selectedOptions
-                    ? selectedOptions.map((option) => option.value)
-                    : [];
-                  setValue(`variants.${index}.values`, values);
+              <Controller
+                name={`variants.${index}.values`}
+                control={control}
+                rules={{
+                  validate: (value) => value.length > 0 || "At least one value is required",
                 }}
+                render={({ field: { onChange, value, ref } }) => (
+                  <CreatableSelect
+                    isMulti
+                    placeholder="Values"
+                    options={[
+                      { value: "S", label: "S" },
+                      { value: "M", label: "M" },
+                      { value: "L", label: "L" },
+                      { value: "Black", label: "Black" },
+                      { value: "Red", label: "Red" },
+                    ]}
+                    value={value.map((v) => ({ value: v, label: v }))} // Format value for CreatableSelect
+                    onChange={(selectedOptions) => {
+                      const selectedValues = selectedOptions
+                        ? selectedOptions.map((option) => option.value)
+                        : [];
+                      onChange(selectedValues); // Update React Hook Form state
+                    }}
+                    ref={ref} // Set ref for React Hook Form
+                  />
+                )}
               />
-              {/* Custom validation for ensuring at least one value is selected */}
               {errors.variants?.[index]?.values && (
                 <span className="text-red-500 text-sm">
                   {errors.variants[index].values.message}
                 </span>
               )}
-              <input
-                type="hidden"
-                {...register(`variants.${index}.values`, {
-                  validate: (value) =>
-                    (value && value.length > 0) ||
-                    "At least one value is required",
-                })}
-              />
             </div>
 
             <button
